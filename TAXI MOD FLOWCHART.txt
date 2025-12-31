@@ -1,0 +1,116 @@
+TAXI MOD FLOWCHART
+
+[START]
+PLAYER DEFINED
+	X wait loop
+PLAYER NEAR TAXI
+	X wait loop
+PLAYER NOT WANTED
+	X car flees & shows text
+PLAYER CLICKS TAB
+	player enters
+
+[ENTERING]
+	player made ignored
+	makes driver immune
+PLAYER SURVIVES
+	X exit 1
+TAXI DRIVER IN CAR (MADE IMMUNE)
+	X exit 1
+PLAYER NOT CANCELS
+	X exit 1
+
+[IN CAR]
+	show instruction
+	show dialogue
+PLAYER IN CAR (NOT RETURN PRESSED)
+& PLAYER SURVIVES
+	X exit 1
+TAXI DRIVER IN CAR
+	X no_driver
+CAR NOT BROKEN
+	X car_broken
+PLAYER MARKS A DESTINATION
+	X wait loop
+& ENOUGH MONEY
+& WITHIN DISTANCE & {WITHIN UNLOCKED}
+	X exit 2
+
+[ON TRIP]
+	show instruction
+	show dialogue
+	begins driving proced
+	traffic rules proced
+PLAYER IN CAR (NOT RETURN PRESSED)
+	X player bails out
+	X charges player
+	X exit 1
+PLAYER SURVIVES
+	X exit 1
+TAXI DRIVER IN CAR
+	X no_driver
+CAR NOT BROKEN
+	X car_broken
+NOT FPS VIEW TRIGGERED
+	X FPS view
+NOT RUSH TRIGGERED
+	X rush
+	X apply new traffic rule
+NOT SKIP TRIP TRIGGERED
+	X trip skip
+CAR ARRIVES
+	X wait loop
+
+[ARRIVES]
+	show info
+	show cab fare
+	charges player
+	release ignored mode
+PLAYER SURVIVES
+	X exit 3
+	player exits
+	exit 3
+
+{proced: trip skip}
+fade screen
+skip time
+put taxi at destination
+jump to [ARRIVES]
+
+{proced: exit 1}
+taxi drives away
+release ignored mode
+back to START
+
+{proced: no_driver}
+car stops
+release ignored mode
+show info: abrupt
+player gets out too
+back to START
+
+{proced: car_broken}
+release ignored mode
+show info: abrupt
+PLAYER SURVIVES
+	player bails out
+TAXI DRIVER SURVIVES
+	driver bails out
+	driver runs away
+back to START
+	
+
+{proced: exit 2}
+release ignored mode
+player gets out
+car flees
+back to START
+
+{proced: exit 3}
+taxi drives away
+back to START
+
+
+
+
+
