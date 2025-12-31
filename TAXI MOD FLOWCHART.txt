@@ -39,6 +39,7 @@ PLAYER MARKS A DESTINATION
 [ON TRIP]
 	show instruction
 	show dialogue
+	enable stuck check
 	begins driving proced
 	traffic rules proced
 PLAYER IN CAR (NOT RETURN PRESSED)
@@ -51,6 +52,8 @@ TAXI DRIVER IN CAR
 	X no_driver
 CAR NOT BROKEN
 	X car_broken
+CAR NOT STUCK
+	X car_stuck
 NOT FPS VIEW TRIGGERED
 	X FPS view
 NOT RUSH TRIGGERED
@@ -80,6 +83,7 @@ jump to [ARRIVES]
 {proced: exit 1}
 taxi drives away
 release ignored mode
+remove refs
 back to START
 
 {proced: no_driver}
@@ -87,6 +91,7 @@ car stops
 release ignored mode
 show info: abrupt
 player gets out too
+remove refs
 back to START
 
 {proced: car_broken}
@@ -97,17 +102,24 @@ PLAYER SURVIVES
 TAXI DRIVER SURVIVES
 	driver bails out
 	driver runs away
+remove refs
 back to START
 	
+{proced: car_stuck}
+fade screen
+put taxi on a driveable traffic node
+return
 
 {proced: exit 2}
 release ignored mode
 player gets out
 car flees
+remove refs
 back to START
 
 {proced: exit 3}
 taxi drives away
+remove refs
 back to START
 
 
