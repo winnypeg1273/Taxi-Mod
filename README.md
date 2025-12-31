@@ -10,7 +10,7 @@ It sometimes causes the player to remain ignored by police after the trip ends
 
 ## Goals for my new version
 * Fixes all the mentioned bugs
-* Handles various trip interruption cases such as: car damaged, taxi driver got out
+* Handles various trip interruption cases such as: car damaged or stuck, taxi driver got out
 * The mod now properly checks if the player actually has enough money to start the trip, or else the player will get out of the car
 * It also checks if the destination is within an unlocked region or city
 * The taxi only operates within a certain distance. If the player finds it in a city, then it only operates within the city's limit.
