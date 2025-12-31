@@ -1,0 +1,15 @@
+MYTAXT Press ~k~~PED_ANSWER_PHONE~ to enter Cab as a Passenger.
+MYCONT [~k~~VEHICLE_FIREWEAPON~]  Ride To Current Destination.   [c] Toggle TaxiCamera.
+MCONT [~k~~CONVERSATION_YES~] Skip Ride.  [SHIFT]  Ignore Traffic Rules.   [c] Toggle TaxiCamera.   [~k~~VEHICLE_ENTER_EXIT~]  Exit.
+MCONT2 [~k~~CONVERSATION_YES~] Skip Ride.  [SHIFT]  Follow Traffic Rules.   [c] Toggle TaxiCamera.    [~k~~VEHICLE_ENTER_EXIT~]  Exit.
+NMON You don't have enough money.
+INMON Your Money is not enough. Press [~k~~VEHICLE_FIREWEAPON~] to continue or [~k~~VEHICLE_HANDBRAKE~] if your destination is Changed. Otherwise get out of the car.   
+FARED Cab Fare $~1~
+TAXNMRK You need to mark a destination
+TAXI_2 Where you want to go homie?
+TAXI_3 Ayo-we've arrived...
+TAXI_4 Can I get a cab out to me?
+TAXI_5 This job wouldn't be so bad if it weren't for all the shitty drivers in Los Santos...
+MYTAXT Press ~k~~PED_ANSWER_PHONE~ to enter cab as a passenger.
+ABRUPT Your trip has been interrupted.
+WANTED We won't help fugitives escape!

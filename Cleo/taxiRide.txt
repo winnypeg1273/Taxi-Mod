@@ -1,0 +1,345 @@
+// This file was decompiled using SASCM.ini published on 2021-01-30
+{$CLEO .cs}
+
+0000: NOP 
+
+:NONAME_2
+wait 0 
+if 
+   Player.Defined($PLAYER_CHAR)
+jf @NONAME_289 
+if 
+00E1:   player 0 pressed_key 4 
+jf @NONAME_289 
+31@ = 0 
+store_closest_entities $PLAYER_ACTOR 0@ 1@ 
+if 
+  0@ > 0 
+jf @NONAME_2 
+Car.StorePos(0@, 27@, 28@, 29@)
+if 
+80FF:   not actor $PLAYER_ACTOR sphere 0 in_sphere 27@ 28@ 29@ radius 3.0 3.0 2.0 on_foot 
+jf @NONAME_138 
+jump @NONAME_2 
+
+:NONAME_138
+08EC: 18@ = car 0@ class 
+if 
+   not 18@ == 6 
+jf @NONAME_171 
+jump @NONAME_2 
+
+:NONAME_171
+01E9: 18@ = car 0@ num_passengers 
+if 
+  18@ == 0 
+jf @NONAME_2 
+046C: TIMERA = car 0@ driver 
+if 
+   not TIMERA == -1 
+jf @NONAME_2 
+jump @NONAME_230 
+
+:NONAME_230
+wait 0 
+Car.StorePos(0@, 27@, 28@, 29@)
+Car.DriveTo(0@, 27@, 28@, 29@)
+09B0: set_car 0@ accessible_for_player_using_controller 1 
+05CA: AS_actor $PLAYER_ACTOR enter_car 0@ passenger_seat 1 time 10000 
+jump @NONAME_296 
+
+:NONAME_289
+jump @NONAME_2 
+
+:NONAME_296
+wait 0 
+2@ = Player.WantedLevel($PLAYER_CHAR)
+if or
+00E1:   player 0 pressed_key 0 
+wasted_or_busted 
+jf @NONAME_334 
+jump @NONAME_2 
+
+:NONAME_334
+wait 0 
+if 
+   Actor.InCar($PLAYER_ACTOR, 0@)
+jf @NONAME_296 
+jump @NONAME_364 
+
+:NONAME_364
+wait 0 
+if 
+   Actor.InCar($PLAYER_ACTOR, 0@)
+jf @NONAME_364 
+if 
+  2@ == 0 
+jf @NONAME_424 
+Player.ClearWantedLevel($PLAYER_CHAR)
+03BF: set_player $PLAYER_CHAR ignored_by_everyone 1 
+jump @NONAME_431 
+
+:NONAME_424
+jump @NONAME_431 
+
+:NONAME_431
+wait 1000 
+03E6: remove_text_box 
+0512: show_permanent_text_box 'MYCONT' 
+stream_custom_script "TAXICAMERA.S" 
+jump @NONAME_473 
+
+:NONAME_473
+wait 0 
+if and
+   Actor.InCar($PLAYER_ACTOR, 0@)
+   not wasted_or_busted 
+jf @NONAME_505 
+jump @NONAME_514 
+
+:NONAME_505
+03E6: remove_text_box 
+jump @NONAME_2 
+
+:NONAME_514
+if 
+get_target_blip_coords 5@ 6@ 7@ 
+jf @NONAME_579 
+if 
+  31@ == 1 
+jf @NONAME_572 
+0512: show_permanent_text_box 'MYCONT' 
+31@ = 0 
+
+:NONAME_572
+jump @NONAME_606 
+
+:NONAME_579
+03E6: remove_text_box 
+0512: show_permanent_text_box 'TAXNMRK' 
+31@ = 1 
+jump @NONAME_473 
+
+:NONAME_606
+if 
+   Player.WantedLevel($PLAYER_CHAR) > 2
+jf @NONAME_657 
+046C: 30@ = car 0@ driver 
+05DD: AS_actor 30@ flee_from_actor $PLAYER_ACTOR from_origin_radius 100.0 timelimit 10000 
+03E6: remove_text_box 
+jump @NONAME_2 
+
+:NONAME_657
+if 
+00E1:   player 0 pressed_key 17 
+jf @NONAME_473 
+Car.StorePos(0@, 11@, 12@, 13@)
+050A: TIMERA = distance_between_XYZ 11@ 12@ 13@ and_XYZ 5@ 6@ 7@ 
+TIMERA *= 0.05 
+0090: TIMERA = float TIMERA to_integer 
+TIMERA += -1 
+if 
+   Player.Money($PLAYER_CHAR) > TIMERA
+jf @NONAME_841 
+jump @NONAME_762 
+
+:NONAME_762
+wait 0 
+03E6: remove_text_box 
+0512: show_permanent_text_box 'MCONT' 
+stream_custom_script "TRAFFICRULES.S" 
+Car.SetToNormalDriver(0@)
+Car.SetDriverBehaviour(0@, CarMission.Cruise)
+Car.SetMaxSpeed(0@, 30.0)
+Car.DriveTo(0@, 5@, 6@, 7@)
+jump @NONAME_1030 
+
+:NONAME_841
+wait 500 
+0512: show_permanent_text_box 'INMON' 
+jump @NONAME_864 
+
+:NONAME_864
+wait 0 
+if 
+00E1:   player 0 pressed_key 17 
+jf @NONAME_892 
+jump @NONAME_762 
+
+:NONAME_892
+if 
+00E1:   player 0 pressed_key 6 
+jf @NONAME_1002 
+Car.StorePos(0@, 11@, 12@, 13@)
+050A: TIMERA = distance_between_XYZ 11@ 12@ 13@ and_XYZ 5@ 6@ 7@ 
+TIMERA *= 0.01 
+0090: TIMERA = float TIMERA to_integer 
+TIMERA += -1 
+wait 1000 
+if 
+   Player.Money($PLAYER_CHAR) > TIMERA
+jf @NONAME_864 
+jump @NONAME_762 
+
+:NONAME_1002
+if or
+   not Actor.InCar($PLAYER_ACTOR, 0@)
+wasted_or_busted 
+jf @NONAME_864 
+jump @NONAME_2 
+
+:NONAME_1030
+wait 0 
+if 
+   not wasted_or_busted 
+jf @NONAME_2 
+072F: enable_car 0@ stuck_check_distance 1.0 time 2000 and_restore_if stuck 1 flipped 1 unk_place_on_road_properly 1 to_path 1 // extended 03CC 
+if 
+01AD:   car 0@ sphere 0 near_point 5@ 6@ radius 25.0 25.0 
+jf @NONAME_1366 
+Car.SetMaxSpeed(0@, 0.0)
+jump @NONAME_1119 
+
+:NONAME_1119
+wait 0 
+if 
+01C1:   car 0@ stopped 
+jf @NONAME_1119 
+050A: 17@ = distance_between_XYZ 11@ 12@ 13@ and_XYZ 5@ 6@ 7@ 
+17@ *= 0.05 
+0090: 17@ = float 17@ to_integer 
+17@ *= -1 
+050A: TIMERA = distance_between_XYZ 11@ 12@ 13@ and_XYZ 5@ 6@ 7@ 
+TIMERA *= 0.05 
+0090: TIMERA = float TIMERA to_integer 
+if 
+  TIMERA > 0 
+jf @NONAME_1253 
+TIMERA += -1 
+
+:NONAME_1253
+if 
+   Player.Money($PLAYER_CHAR) > TIMERA
+jf @NONAME_2031 
+Player.Money($PLAYER_CHAR) += 17@
+wait 1000 
+0633: AS_actor $PLAYER_ACTOR exit_car 
+17@ *= -1 
+01E4: show_text_1number_lowpriority GXT 'FARED' number 17@ time 2000 flag 1 
+03E6: remove_text_box 
+wait 1000 
+00AE: set_car 0@ traffic_behaviour_to 1 
+Car.SetMaxSpeed(0@, 30.0)
+Car.RemoveReferences(0@)
+wait 1000 
+Camera.Restore_WithJumpCut
+03BF: set_player $PLAYER_CHAR ignored_by_everyone 0 
+jump @NONAME_2 
+
+:NONAME_1366
+if 
+   not Actor.InCar($PLAYER_ACTOR, 0@)
+jf @NONAME_1608 
+Car.StorePos(0@, 21@, 22@, 23@)
+Car.DriveTo(0@, 21@, 22@, 23@)
+050A: 17@ = distance_between_XYZ 11@ 12@ 13@ and_XYZ 21@ 22@ 23@ 
+17@ *= 0.05 
+0090: 17@ = float 17@ to_integer 
+17@ *= -1 
+050A: TIMERA = distance_between_XYZ 11@ 12@ 13@ and_XYZ 21@ 22@ 23@ 
+TIMERA *= 0.05 
+0090: TIMERA = float TIMERA to_integer 
+if 
+  TIMERA > 0 
+jf @NONAME_1527 
+TIMERA += -1 
+
+:NONAME_1527
+if 
+   Player.Money($PLAYER_CHAR) > TIMERA
+jf @NONAME_2031 
+Player.Money($PLAYER_CHAR) += 17@
+17@ *= -1 
+01E4: show_text_1number_lowpriority GXT 'FARED' number 17@ time 2000 flag 1 
+Car.RemoveReferences(0@)
+03E6: remove_text_box 
+wait 1000 
+Camera.Restore_WithJumpCut
+03BF: set_player $PLAYER_CHAR ignored_by_everyone 0 
+jump @NONAME_2 
+
+:NONAME_1608
+wait 0 
+if 
+00E1:   player 0 pressed_key 11 
+jf @NONAME_1030 
+0169: set_fade_color_RGB 0 0 0 
+fade 0 2000 
+wait 2200 
+7@ += 3.0 
+04E4: refresh_game_renderer_at 5@ 6@ 
+Car.PutAt(0@, 5@, 6@, 7@)
+wait 800 
+Car.PutAt(0@, 5@, 6@, 7@)
+wait 800 
+Car.PutAt(0@, 5@, 6@, 7@)
+wait 100 
+02C1: store_to 5@ 6@ 7@ car_path_coords_closest_to 5@ 6@ 7@ 
+wait 800 
+Car.PutAt(0@, 5@, 6@, -100.0)
+wait 100 
+fade 1 2000 
+050A: 17@ = distance_between_XYZ 11@ 12@ 13@ and_XYZ 5@ 6@ 7@ 
+17@ *= 0.05 
+0090: 17@ = float 17@ to_integer 
+17@ *= -1 
+050A: TIMERA = distance_between_XYZ 11@ 12@ 13@ and_XYZ 5@ 6@ 7@ 
+TIMERA *= 0.05 
+0090: TIMERA = float TIMERA to_integer 
+if 
+  TIMERA > 0 
+jf @NONAME_1889 
+TIMERA += -1 
+
+:NONAME_1889
+0085: TIMERB = 17@ // (int) 
+TIMERB *= -1 
+call_function 4461760 1 1 TIMERB 
+if 
+   Player.Money($PLAYER_CHAR) > TIMERA
+jf @NONAME_2031 
+Player.Money($PLAYER_CHAR) += 17@
+Car.RemoveReferences(0@)
+0633: AS_actor $PLAYER_ACTOR exit_car 
+17@ *= -1 
+01E4: show_text_1number_lowpriority GXT 'FARED' number 17@ time 2000 flag 1 
+wait 2000 
+00AE: set_car 0@ traffic_behaviour_to 1 
+Car.DriveTo(0@, 11@, 12@, 13@)
+03E6: remove_text_box 
+wait 1000 
+Camera.Restore_WithJumpCut
+03BF: set_player $PLAYER_CHAR ignored_by_everyone 0 
+jump @NONAME_2 
+
+:NONAME_2031
+wait 0 
+046C: 30@ = car 0@ driver 
+03E5: show_text_box 'NMON' 
+jump @NONAME_2061 
+
+:NONAME_2061
+wait 0 
+Car.StorePos(0@, 25@, 26@, 27@)
+Car.DriveTo(0@, 25@, 26@, 27@)
+0633: AS_actor 30@ exit_car 
+07A5: AS_actor 30@ attack_actor $PLAYER_ACTOR time 30000 
+0633: AS_actor $PLAYER_ACTOR exit_car 
+wait 20000 
+if 
+   not Actor.Dead(30@)
+jf @NONAME_2 
+05CB: AS_actor 30@ enter_car 0@ as_driver 10000 ms 
+Actor.RemoveReferences(30@)
+Car.RemoveReferences(0@)
+jump @NONAME_2 
